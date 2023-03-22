@@ -5,3 +5,6 @@
 ssm,spring boot, reids, spring security, 文件服务器,vue,elementUI,... ...
 # 网址
 http://bigtruck.love:9091/#/
+# 账户 密码
+root
+123456
