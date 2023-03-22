@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backstage.mapper.SysPermissionMapper">
+    <update id="update" parameterType="com.example.backstage.entity.SysPermission">
+        update sys_permission permission
+--         set用来连接if语句内的表达式,注释--得在开头不然会报错
+        <set>
+            <if test="label != null">
+                permission.label=#{label},
+            </if>
+            <if test="code != null">
+                permission.code = #{code}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+    <delete id="delete">
+        delete from sys_permission where id = #{id};
+    </delete>
+
+
+    <select id="findById" resultType="com.example.backstage.entity.SysPermission">
+        select * from sys_permission where id=#{id};
+    </select>
+
+
+    <select id="findAll" resultType="com.example.backstage.entity.SysPermission">
+        select * from sys_permission;
+    </select>
+
+
+    <select id="findPage" resultType="com.example.backstage.entity.SysPermission">
+        select * from sys_permission limit #{pageNo}, #{pageSize};
+    </select>
+
+
+    <select id="findByInfo" resultType="com.example.backstage.entity.SysPermission">
+        select * from sys_permission
+        <if test="info != null and info.length > 0">
+--             concat: 自带的字符串拼接函数, % 代表匹配所有字符,且字符长度不固定
+            where label like concat('%', #{info}, '%') or code like concat('%', #{info}, '%')
+        </if>
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*) from sys_permission
+    </select>
+
+    <insert id="insert" parameterType="com.example.backstage.entity.SysPermission">
+        insert into sys_permission(`label`, `code`) values (#{label}, #{code});
+    </insert>
+
+
+</mapper>

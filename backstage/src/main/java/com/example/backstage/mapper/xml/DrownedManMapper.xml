@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backstage.mapper.DrownedManMapper">
+    <insert id="insert" parameterType="com.example.backstage.entity.DrownedMan">
+        insert into drowned (`name`, `sex`, `age`, `drowning_time`,`surrounding`, `can_swim`,`death`)
+        values(#{name},#{sex},#{age},#{drowningTime},#{surrounding},#{canSwim},#{death})
+    </insert>
+    <select id="selectList" resultType="com.example.backstage.entity.DrownedMan">
+        select * from drowned;
+    </select>
+
+    <!--<select id="findUserById" resultType="com.example.backstage.entity.DrownedMan">-->
+    <!--    select * from user_bigdata where id=#{id}-->
+    <!--</select>-->
+</mapper>

@@ -1,0 +1,65 @@
+{
+  "id": "3723764",
+  "name": "sport",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "3283217",
+      "name": "角色添加",
+      "font_class": "add-role",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "145439",
+      "name": "添加用户",
+      "font_class": "tianjiayonghu",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "688350",
+      "name": "YY-shanchu",
+      "font_class": "diaozhengban08",
+      "unicode": "e690",
+      "unicode_decimal": 59024
+    },
+    {
+      "icon_id": "3020035",
+      "name": "二级-菜单管理",
+      "font_class": "erji-caidanguanli",
+      "unicode": "eaac",
+      "unicode_decimal": 60076
+    },
+    {
+      "icon_id": "1047497",
+      "name": "系统管理",
+      "font_class": "xitongguanli",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "4511910",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "5055858",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "7474671",
+      "name": "权限管理",
+      "font_class": "quanxianguanli",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    }
+  ]
+}

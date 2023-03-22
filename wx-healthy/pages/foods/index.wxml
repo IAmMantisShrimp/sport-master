@@ -1,0 +1,29 @@
+<van-search
+    wx:if="{{ searchShow }}"
+    shape="round"
+    placeholder="请输入食物名称"
+    bind:change="onChange"/>
+<view wx:if="{{ foodsShow }}">
+    <van-card
+        wx:for="{{ dataList }}"
+        wx:key="key"
+        title-class="title"
+        desc-class="desc"
+        desc="{{ item.heat + ' 千卡 / ' + item.nutrient }}" 
+        title="{{ item.title }}" 
+        thumb="{{ image.split(item.imageUrls) }}"
+        data-image="{{ item.imageUrls }}"
+        bindtap="getFoodInfo"
+        data-food="{{ item }}"/>
+</view>
+<wxs module="image">
+    module.exports = {
+        split: function(str) {
+            if (str) {
+                return 'http://ajie.jierxm.com/' + str.split(',')[0];
+            } else {
+                return 'http://ajie.jierxm.com/5b5eeb76d1864b7ca761da4770781a18.jpg';
+            }
+        }
+    }
+</wxs>

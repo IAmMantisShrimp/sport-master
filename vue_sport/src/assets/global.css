@@ -1,0 +1,10 @@
+/*全局样式*/
+
+/*主页样式*/
+html,body,#map{
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-family: 悠哉字体;
+    font-size: 18px;
+}

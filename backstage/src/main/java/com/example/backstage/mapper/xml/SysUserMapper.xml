@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.backstage.mapper.SysUserMapper">
+    <insert id="insert">
+        insert into sys_user(`user_name`, `password`, nick_name, `sex`, `avatar`, `address`, `open_id`, `status`,
+                             `admin`, `phone_number`)
+        values (#{username}, #{password}, #{nickName}, #{sex}, #{avatar}, #{address}, #{openId}, #{status}, #{admin},
+                #{phoneNumber})
+    </insert>
+    <update id="update">
+        update sys_user
+        <set>
+            <if test="username != null">
+                user_name = #{username},
+            </if>
+            <if test="password != null">
+                password = #{password},
+            </if>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+            <if test="address != null">
+                address = #{address},
+            </if>
+            <if test="openId != null">
+                open_id = #{openId},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="admin != null">
+                admin = #{admin},
+            </if>
+            <if test="phoneNumber != null">
+                phone_number = #{phoneNumber}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updatePasswordById" parameterType="com.example.backstage.vo.UserLoginVo">
+        update sys_user
+        <set>
+            <if test="password != null">
+                password = #{password}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <update id="updatePasswordByName">
+        update sys_user
+        <set>
+            <if test="password != null">
+                password = #{password}
+            </if>
+        </set>
+        where user_name = #{username}
+    </update>
+    <update id="updateByOpenId">
+        update sys_user
+        <set>
+            <if test="nickName != null">
+                nick_name = #{nickName},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="avatar != null">
+                avatar = #{avatar},
+            </if>
+
+            <if test="phoneNumber != null">
+                phone_number = #{phoneNumber}
+            </if>
+        </set>
+        where open_id = #{openId}
+    </update>
+
+
+    <delete id="delete">
+        delete
+        from sys_user
+        where id = #{id}
+    </delete>
+
+    <select id="findAll" resultType="com.example.backstage.entity.SysUser">
+        select *
+        from sys_user;
+    </select>
+    <select id="findByUsername" resultMap="mainMap">
+        select *
+        from sys_user
+        where user_name = #{username} or phone_number=#{username} or open_id=#{username};
+    </select>
+    <select id="findUserByOpenId" resultType="com.example.backstage.entity.SysUser">
+        select *
+        from sys_user
+        where open_id=#{openId};
+    </select>
+    <resultMap id="mainMap" type="com.example.backstage.entity.SysUser">
+        <id column="id" property="id"/>
+        <result column="user_name" property="username"/>
+        <result column="password" property="password"/>
+        <result column="sex" property="sex"/>
+        <result column="avatar" property="avatar"/>
+        <result column="address" property="address"/>
+        <result column="open_id" property="openId"/>
+        <result column="status" property="status"/>
+        <result column="admin" property="admin"/>
+        <result column="phone_number" property="phoneNumber"/>
+        <!--  根据id查询roles  -->
+        <collection property="roles" ofType="com.example.backstage.entity.SysRole"
+                    select="findRoles" column="id"/>
+        <!--  根据id查询permissions  -->
+        <!--<collection property="permissions" ofType="com.example.backend.entity.SysPermission"-->
+        <!--            resultMap="permissionMap" select="findPermission" column="id"/>-->
+        <!--  resultMap="permissionMap"不能写在collection中,不然会报错,编译过不去  -->
+    </resultMap>
+
+    <resultMap id="roleMap" type="com.example.backstage.entity.SysRole">
+        <id column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="code" property="code"/>
+        <collection property="menus" select="findMenus"
+                    column="id" ofType="com.example.backstage.entity.SysMenu"/>
+        <collection property="permissions" select="findPermission"
+                    column="id" ofType="com.example.backstage.entity.SysPermission"/>
+    </resultMap>
+
+    <!-- select: user_role为中间表,一个user对应一种roles  -->
+    <select id="findRoles" parameterType="int" resultMap="roleMap">
+        select *
+        from sys_role
+        where id in (select role_id from user_role where user_id = #{id})
+    </select>
+
+    <!--  resultMap: 为一个结果集  -->
+    <resultMap id="menuMap" type="com.example.backstage.entity.SysMenu">
+        <id column="id" property="id"/>
+        <result column="path" property="path"/>
+        <result column="icon" property="icon"/>
+        <result column="title" property="title"/>
+        <result column="component" property="component"/>
+        <result column="parent_id" property="parentId"/>
+        <collection property="menus" ofType="com.example.backstage.entity.SysMenu"
+                    select="findChildMenus" column="id"/>
+    </resultMap>
+
+
+    <select id="findMenus" resultMap="menuMap">
+        select *
+        from sys_menu
+        where id in (select menu_id from roles_menus where role_id = #{id})
+    </select>
+
+    <select id="findChildMenus" resultType="com.example.backstage.entity.SysMenu">
+        select *
+        from sys_menu
+        where parent_id = #{id}
+    </select>
+
+    <resultMap id="permissionMap" type="com.example.backstage.entity.SysPermission">
+        <id column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="code" property="code"/>
+    </resultMap>
+
+    <select id="findPermission" resultMap="permissionMap">
+        select *
+        from sys_permission
+        where id in (select permission_id from role_permission where role_id = #{id})
+    </select>
+    <!--前端展示的数据-->
+    <select id="findPage" resultType="com.example.backstage.entity.SysUser">
+        select *
+        from sys_user limit #{pageNo}, #{pageSize};
+    </select>
+    <select id="getCount" resultType="java.lang.Integer">
+        select count(*)
+        from sys_user
+    </select>
+    <select id="findUserByNameVo" resultType="com.example.backstage.entity.SysUser">
+        select * from sys_user
+        <if test="name != null and name.length > 0">
+            -- concat: 自带的字符串拼接函数, % 代表匹配所有字符,且字符长度不固定
+            where user_name like concat('%', #{name}, '%')
+        </if>
+    </select>
+    <select id="findUserById" resultType="com.example.backstage.entity.SysUser">
+        select *
+        from sys_user
+        where id = #{id};
+    </select>
+    <select id="getPhoneNumber" resultType="java.lang.String">
+        select phone_number from sys_user where user_name=#{username}
+    </select>
+
+
+    <!--<select id="findByUsername" resultMap="mainMap">-->
+    <!--    select * from sys_user where user_name=#{username};-->
+    <!--</select>-->
+
+    <!--<resultMap id="mainMap" type="com.example.backstage.entity.SysUser">-->
+    <!--    <id column="id" property="id"/>-->
+    <!--    <result column="username" property="username"/>-->
+    <!--    <result column="password" property="password"/>-->
+    <!--    <result column="sex" property="sex"/>-->
+    <!--    <result column="avatar" property="avatar"/>-->
+    <!--    <result column="address" property="address"/>-->
+    <!--    <result column="open_id" property="openId"/>-->
+    <!--    <result column="status" property="status"/>-->
+    <!--    <result column="admin" property="admin"/>-->
+    <!--    <result column="phone_number" property="phoneNumber"/>-->
+    <!--    &lt;!&ndash;<collection property="roles" ofType="com.example.backstage.entity.SysRole"&ndash;&gt;-->
+    <!--    &lt;!&ndash;select="findRoles" column="id"/>&ndash;&gt;-->
+    <!--</resultMap>-->
+
+    <!--<resultMap id="roleMap" type="com.example.backstage.entity.SysRole">-->
+    <!--    <id column="id" property="id"/>-->
+    <!--    <result column="label" property="label"/>-->
+    <!--    <result column="code" property="code"/>-->
+    <!--    <collection property="menus" select="findMenus" column="id" ofType="com.example.backstage.entity.SysMenu"/>-->
+    <!--    <collection property="permissions" select="findPermission" column="id" ofType="com.example.backstage.entity.SysPermission"/>-->
+    <!--</resultMap>-->
+    <!--<select id="findRoles" parameterType="int" resultMap="roleMap">-->
+    <!--    select * from sys_role where id in (select role_id from user_role where user_id=#{id})-->
+    <!--</select>-->
+
+    <!--<resultMap id="menuMap" type="com.example.backstage.entity.SysMenu">-->
+    <!--    <id column="id" property="id"/>-->
+    <!--    <result column="path" property="path"/>-->
+    <!--    <result column="icon" property="icon"/>-->
+    <!--    <result column="title" property="title"/>-->
+    <!--    <result column="component" property="component"/>-->
+    <!--    <result column="parent_id" property="parentId"/>-->
+    <!--    <collection property="menus" ofType="com.example.backstage.entity.SysMenu" select="childMenus" column="id"/>-->
+    <!--</resultMap>-->
+    <!--<select id="findMenus" resultMap="menuMap">-->
+    <!--    select * from sys_menu where id in (select menu_id from roles_menus where role_id=#{id}) and parent_id is null-->
+    <!--</select>-->
+    <!--<select id="childMenus" resultType="com.example.backstage.entity.SysMenu">-->
+    <!--    select * from sys_menu where id=#{id}-->
+    <!--</select>-->
+    <!--<resultMap id="permissionMap" type="com.example.backstage.entity.SysPermission">-->
+    <!--    <id column="id" property="id"/>-->
+    <!--    <result column="label" property="label"/>-->
+    <!--    <result column="code" property="code"/>-->
+    <!--</resultMap>-->
+    <!--<select id="permissionMap" resultMap="permissionMap">-->
+    <!--    select * from sys_permission where id in (select permission_id from role_permission where role_id=#{id})-->
+    <!--</select>-->
+
+</mapper>

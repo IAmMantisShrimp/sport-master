@@ -1,0 +1,14 @@
+.avatar-class {
+    margin-left: 5%;
+}
+
+.van-cell {
+    margin-top: 5px;
+    background-color:thistle !important;
+}
+
+.logout-btn {
+    margin-top: 10%;
+    width: 90%;
+    border-radius: 10px;
+}

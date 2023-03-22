@@ -1,0 +1,100 @@
+<view>
+    <van-cell-group>
+        <van-field
+            value="{{ food.nutrient }}"
+            label="营养元素"
+            input-align="right"/>
+        <van-field
+            value="{{ food.heat + '千卡' }}"
+            label="热量"
+            input-align="right"/>
+        <van-field
+            value="{{ food.protein + '克' }}"
+            label="蛋白质"
+            input-align="right"/>
+        <van-field
+            value="{{ food.fat + '克' }}"
+            label="脂肪"
+            input-align="right"/>
+        <van-field
+            value="{{ food.carbonWater + '克' }}"
+            label="碳水化合物"
+            input-align="right"/>
+        <van-field
+            value="{{ food.dietaryFiber + '克' }}"
+            label="膳食纤维"
+            input-align="right"/>
+        <van-field
+            value="{{ food.vitaminA + 'ugRE' }}"
+            label="维生素A"
+            input-align="right"/>
+        <van-field
+            value="{{ food.vitaminC + '毫克' }}"
+            label="维生素C"
+            input-align="right"/>
+        <van-field
+            value="{{ food.vitaminE + '克' }}"
+            label="维生素E"
+            input-align="right"/>
+        <van-field
+            value="{{ food.carrot + '微克' }}"
+            label="胡萝卜素"
+            input-align="right"/>
+        <van-field
+            value="{{ food.vitaminB1 + '毫克' }}"
+            label="维生素B1"
+            input-align="right"/>
+        <van-field
+            value="{{ food.vitaminB2 + '毫克' }}"
+            label="维生素B2"
+            input-align="right"/>
+        <van-field
+            value="{{ food.niacin + '毫克' }}"
+            label="烟酸"
+            input-align="right"/>
+        <van-field
+            value="{{ food.cholesterol + '毫克' }}"
+            label="胆固醇"
+            input-align="right"/>
+        <van-field
+            value="{{ food.magnesium + '毫克' }}"
+            label="镁"
+            input-align="right"/>
+        <van-field
+            value="{{ food.iron + '毫克' }}"
+            label="铁"
+            input-align="right"/>
+        <van-field
+            value="{{ food.calcium + '毫克' }}"
+            label="钙"
+            input-align="right"/>
+        <van-field
+            value="{{ food.zinc + '毫克' }}"
+            label="锌"
+            input-align="right"/>
+        <van-field
+            value="{{ food.copper + '毫克' }}"
+            label="铜"
+            input-align="right"/>
+        <van-field
+            value="{{ food.manganese + '毫克' }}"
+            label="锰"
+            input-align="right"/>
+        <van-field
+            value="{{ food.potassium + '毫克' }}"
+            label="钾"
+            input-align="right"/>
+        <van-field
+            value="{{ food.phosphorus + '毫克' }}"
+            label="磷"
+            input-align="right"/>
+        <van-field
+            value="{{ food.sodium + '毫克' }}"
+            label="钠"
+            input-align="right"/>
+        <van-field
+            value="{{ food.selenium + '毫克' }}"
+            label="硒"
+            input-align="right"/>
+</van-cell-group>
+</view>

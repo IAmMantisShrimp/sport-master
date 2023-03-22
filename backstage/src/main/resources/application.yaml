@@ -1,0 +1,85 @@
+spring:
+  #  使用其他的文件配置
+#  profiles:
+#    active: dev
+  # swagger配置
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/20220516_sport?useUnicode=true&characterEncoding=utf8&useSSL=false
+  #    redis相关配置
+  redis:
+    #    配置主机
+    host: 127.0.0.1
+    #    配置使用的数据库
+    database: 0
+  # 邮件配置
+  mail:
+    # smtp服务主机QQ: smtp.qq.com
+    host: smtp.qq.com
+    # 服务协议
+    protocol: smtp
+    # 编码集
+    default-encoding: UTF-8
+    # 允许测试连接
+    test-connection: true
+    # 设置发件人
+    username: 401968751@qq.com
+    # 授权码 smtp
+    password: izsgqwtnechsbidi
+  main:
+    allow-circular-references: true
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    suffix: .html
+server:
+  port: 9090
+mybatis:
+  mapper-locations: classpath:com/example/backstage/mapper/xml/*.xml
+  #配置映射类所在的包名
+  type-aliases-package: com.example.backstage.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#mybatis-plus:
+#  mapper-locations: classpath:com/example/back_end/mapper/xml/*.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+# jwt配置
+jwt:
+  # 请求头
+  tokenHeader: Authorization
+  #  签名加盐
+  secret: hrsxcl0205
+  # jwt过期时间
+  expiration: 18000
+  # token头部,注意后面有个空格
+  tokenHead: 'Bearer '
+
+# 配置七牛云
+qiniu:
+  # 公钥,鉴权
+  accessKey: RhtJDnIvHKXK6ukPrVbWFoKvyjtOdQ2E7BCCVArh
+  # 密钥,鉴权
+  secretKey: 2F-FQURowVW70fsPjO1wJrndswgU7JETaqmdMHs4
+  # 桶名称
+  bucket: sport20221106
+  # 域名链接 外地服务器
+  imageDomain: http://img.bigtruck.love/
+  # 域名链接 内地服务器
+#  imageDomain: http://rkww6usm1.hn-bkt.clouddn.com/
+
+# 微信小程序
+mini:
+  appid: wx33c58e91dc356845
+  secret: a342b4b503d2dff11c13da3ad191896a
+
+
+
